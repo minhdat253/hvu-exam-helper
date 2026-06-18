@@ -23,6 +23,7 @@
 (function () {
     'use strict';
     // Xin chào các bạn!
+    // Đây là bản 3.2.1
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
