@@ -22,8 +22,7 @@
 
 (function () {
     'use strict';
-    // Xin chào các bạn!
-    // Đây là bản 2.4
+    // Tại sao không được nhỉ
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
