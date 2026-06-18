@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HVU Exam Helper v2.2
 // @namespace    http://sv.shop/
-// @version      2.3.1
+// @version      2.4
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -23,7 +23,7 @@
 (function () {
     'use strict';
     // Xin chào các bạn!
-    // Đây là bản 3.2.1
+    // Đây là bản 2.4
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
