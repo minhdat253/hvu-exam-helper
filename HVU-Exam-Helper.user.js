@@ -22,7 +22,7 @@
 
 (function () {
     'use strict';
-
+    // Xin chào các bạn!
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
