@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         HVU Exam Helper v2.2
+// @name         HVU Exam Helper v2.3
 // @namespace    http://sv.shop/
 // @version      2.3
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
