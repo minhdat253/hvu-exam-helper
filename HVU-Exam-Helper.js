@@ -14,7 +14,11 @@
 // @grant        GM_getValue
 // @run-at       document-start
 // @noframes
+
+// @downloadURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.js
+// @updateURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.js
 // ==/UserScript==
+
 
 (function () {
     'use strict';
