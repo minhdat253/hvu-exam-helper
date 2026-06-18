@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HVU Exam Helper
 // @namespace    http://sv.shop/
-// @version      2.5
+// @version      2.6
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -24,12 +24,13 @@
 
 (function () {
     'use strict';
+    // Đây là bản 2.6
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
         FACEBOOK: 'https://www.facebook.com/Dangdat352',
         SHOP: 'https://docs.google.com/spreadsheets/d/1KoQbsf7xffIciikuasRItIdpMyX4NXaYBRTYX5p5tGU/edit?usp=sharing',
-        VERSION: '2.5',
+        VERSION: '2.6',
         UPDATE_URL:
         'https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js'
     };
@@ -44,7 +45,7 @@
         captured: false
     };
 
-    console.log('%c[HVU Helper] 📚 Userscript v2.5 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
+    console.log('%c[HVU Helper] 📚 Userscript v2.6 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
 
     // ======================== UTILITY FUNCTIONS ========================
     function cleanHtml(html) {
