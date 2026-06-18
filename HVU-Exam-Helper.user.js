@@ -15,8 +15,8 @@
 // @run-at       document-start
 // @noframes
 
-// @downloadURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.js
-// @updateURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.js
+// @downloadURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js
+// @updateURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js
 // ==/UserScript==
 
 
