@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HVU Exam Helper v2.2
 // @namespace    http://sv.shop/
-// @version      2.3
+// @version      2.2
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
