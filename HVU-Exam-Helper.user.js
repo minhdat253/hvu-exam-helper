@@ -727,9 +727,33 @@ function showUpdateNotice(version) {
                     z-index: 1;
                 }
 
-                #hvu-helper-menu .header h3 { margin: 0; font-size: 14px; flex: 1; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
+                #hvu-helper-menu .header h3 { margin: 0; font-size: 14px; flex: 1; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);
+                opacity: 90%;
+                }
                 #hvu-helper-menu .header .version { font-size: 10px; opacity: 0.8; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
-                #hvu-helper-menu .header .minimize { cursor: pointer; font-size: 18px; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
+                #hvu-helper-menu .header .minimize{
+                    width:22px;
+                    height:22px;
+
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+
+                    cursor:pointer;
+
+                    color:#ffffff;
+                    font-size:18px;
+                    font-weight:bold;
+
+                    border-radius:4px;
+
+                    transition:.2s;
+                }
+
+                #hvu-helper-menu .header .minimize:hover{
+                    background:rgba(255,255,255,.15);
+                }
+
                 #hvu-helper-menu .content {
                     padding: 12px;
                     max-height: 500px;
@@ -812,10 +836,9 @@ function showUpdateNotice(version) {
                 }
             </style>
             <div class="header">
-                <span>📚</span>
                 <h3>HVU Exam Helper</h3>
                 <span class="version">v${CONFIG.VERSION}</span>
-                <span class="minimize" id="hvu-minimize">−</span>
+                <span class="minimize" id="hvu-minimize">▾</span>
             </div>
             <div class="content" id="hvu-content">
                 <div class="status waiting" id="hvu-status">⏳ Đang chờ bắt đề thi...</div>
@@ -836,7 +859,7 @@ function showUpdateNotice(version) {
         document.getElementById('hvu-minimize').addEventListener('click', function () {
             const content = document.getElementById('hvu-content');
             content.classList.toggle('hidden');
-            this.textContent = content.classList.contains('hidden') ? '+' : '−';
+            this.textContent = content.classList.contains('hidden') ? '▸' : '▾';
         });
 
         document.getElementById('hvu-save-full').addEventListener('click', () => saveTest(false));
