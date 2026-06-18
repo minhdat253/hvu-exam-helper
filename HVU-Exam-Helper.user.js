@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         HVU Exam Helper v2.2
+// @name         HVU Exam Helper v2.4
 // @namespace    http://sv.shop/
-// @version      2.3
+// @version      2.4
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -22,13 +22,12 @@
 
 (function () {
     'use strict';
-    // Đây là phiên bản 2.3
     // ======================== CONFIGURATION ========================
     const CONFIG = {
         ZALO: '0359677390',
         FACEBOOK: 'https://www.facebook.com/Dangdat352',
         SHOP: 'https://docs.google.com/spreadsheets/d/1KoQbsf7xffIciikuasRItIdpMyX4NXaYBRTYX5p5tGU/edit?usp=sharing',
-        VERSION: '2.2'
+        VERSION: '2.4'
     };
 
     // ======================== DATA STORAGE ========================
@@ -41,7 +40,7 @@
         captured: false
     };
 
-    console.log('%c[HVU Helper] 📚 Userscript v2.2 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
+    console.log('%c[HVU Helper] 📚 Userscript v2.4 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
 
     // ======================== UTILITY FUNCTIONS ========================
     function cleanHtml(html) {
@@ -683,7 +682,7 @@ ${q.options.map((opt, i) => {
 
                 #hvu-helper-menu .header h3 { margin: 0; font-size: 14px; flex: 1; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
                 #hvu-helper-menu .header .version { font-size: 10px; opacity: 0.8; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
-                #hvu-helper-menu .header .minimize { cursor: pointer; font-size: 18px; }
+                #hvu-helper-menu .header .minimize { cursor: pointer; font-size: 18px; color: #ffffff; text-shadow: 0 0 5px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), 4px 4px 8px rgba(0,0,0,0.9);}
                 #hvu-helper-menu .content {
                     padding: 12px;
                     max-height: 500px;
@@ -728,7 +727,7 @@ ${q.options.map((opt, i) => {
                 #hvu-helper-menu .link:hover {background: rgba(255,255,255,0.08); color: #ff8fab; }
             </style>
             <div class="header">
-                <span>📚</span>
+                // <span>📚</span>
                 <h3>HVU Exam Helper</h3>
                 <span class="version">v${CONFIG.VERSION}</span>
                 <span class="minimize" id="hvu-minimize">−</span>
