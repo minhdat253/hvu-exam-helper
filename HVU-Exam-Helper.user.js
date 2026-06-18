@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         HVU Exam Helper v2.2
+// @name         HVU Exam Helper v2.3
 // @namespace    http://sv.shop/
-// @version      2.2
+// @version      2.3
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -28,7 +28,7 @@
         ZALO: '0359677390',
         FACEBOOK: 'https://www.facebook.com/Dangdat352',
         SHOP: 'https://docs.google.com/spreadsheets/d/1KoQbsf7xffIciikuasRItIdpMyX4NXaYBRTYX5p5tGU/edit?usp=sharing',
-        VERSION: '2.2'
+        VERSION: '2.3'
     };
 
     // ======================== DATA STORAGE ========================
