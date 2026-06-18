@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         HVU Exam Helper v2.4
+// @name         HVU Exam Helper v2.5
 // @namespace    http://sv.shop/
-// @version      2.4
+// @version      2.5
 // @description  Lưu đề thi HVU ra file Word + Tải PDF - Bypass CSP
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -12,13 +12,15 @@
 // @grant        GM_notification
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_xmlhttpRequest
+
+// @connect      raw.githubusercontent.com
 // @run-at       document-start
 // @noframes
 
 // @downloadURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js
 // @updateURL https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js
 // ==/UserScript==
-
 
 (function () {
     'use strict';
@@ -27,7 +29,9 @@
         ZALO: '0359677390',
         FACEBOOK: 'https://www.facebook.com/Dangdat352',
         SHOP: 'https://docs.google.com/spreadsheets/d/1KoQbsf7xffIciikuasRItIdpMyX4NXaYBRTYX5p5tGU/edit?usp=sharing',
-        VERSION: '2.4'
+        VERSION: '2.5',
+        UPDATE_URL:
+        'https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js'
     };
 
     // ======================== DATA STORAGE ========================
@@ -40,7 +44,7 @@
         captured: false
     };
 
-    console.log('%c[HVU Helper] 📚 Userscript v2.4 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
+    console.log('%c[HVU Helper] 📚 Userscript v2.5 - Starting...', 'color: white; background: #673ab7; font-size: 14px; padding: 5px;');
 
     // ======================== UTILITY FUNCTIONS ========================
     function cleanHtml(html) {
@@ -622,6 +626,49 @@ ${q.options.map((opt, i) => {
     // Initialize PDF download feature
     addPdfDownloadButtons();
 
+    // ======================== UPDATE CHECKER ========================
+
+function checkForUpdate() {
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: CONFIG.UPDATE_URL + '?t=' + Date.now(),
+        onload: function (res) {
+            const match =
+                res.responseText.match(/@version\s+([0-9.]+)/);
+            if (!match) return;
+            const latestVersion = match[1];
+            if (latestVersion !== CONFIG.VERSION) {
+                showUpdateNotice(latestVersion);
+            }
+        }
+    });
+}
+
+function showUpdateNotice(version) {
+    const status =
+        document.getElementById('hvu-status');
+    if (!status) return;
+    status.insertAdjacentHTML(
+        'beforebegin',
+        `
+        <div class="update-box">
+            🚀 Có bản cập nhật mới!
+            <br>
+            Hiện tại: v${CONFIG.VERSION}
+            <br>
+            Mới nhất: v${version}
+            <br>
+            <a
+                href="${CONFIG.UPDATE_URL}"
+                target="_blank"
+                class="update-btn">
+                Cập nhật ngay
+            </a>
+        </div>
+        `
+    );
+}
+
     // ======================== FLOATING MENU ========================
     function createFloatingMenu() {
         // Wait for DOM
@@ -725,9 +772,47 @@ ${q.options.map((opt, i) => {
                 #hvu-helper-menu .links { border-top: 1px solid #2a2a4a; padding-top: 10px; margin-top: 5px; }
                 #hvu-helper-menu .link { display: block; padding: 8px 10px; color: #aaa; text-decoration: none; font-size: 12px; border-radius: 5px; }
                 #hvu-helper-menu .link:hover {background: rgba(255,255,255,0.08); color: #ff8fab; }
+                .update-box{
+                    background:#ff9800;
+                    color:black;
+                    padding:10px;
+                    border-radius:8px;
+                    margin-bottom:10px;
+                    font-size:12px;
+                    text-align:center;
+
+                    animation:updatePulse 1.5s infinite;
+                }
+
+                .update-btn{
+                    display:inline-block;
+                    margin-top:5px;
+                    padding:6px 12px;
+
+                    background:white;
+                    color:#e74b08;
+
+                    text-decoration:none;
+                    border-radius:6px;
+                    font-weight:bold;
+                }
+
+                @keyframes updatePulse{
+                    0%{
+                        transform:scale(1);
+                    }
+
+                    50%{
+                        transform:scale(1.03);
+                    }
+
+                    100%{
+                        transform:scale(1);
+                    }
+                }
             </style>
             <div class="header">
-                // <span>📚</span>
+                <span>📚</span>
                 <h3>HVU Exam Helper</h3>
                 <span class="version">v${CONFIG.VERSION}</span>
                 <span class="minimize" id="hvu-minimize">−</span>
@@ -805,7 +890,13 @@ ${q.options.map((opt, i) => {
     }
 
     // ======================== INITIALIZE ========================
+
     createFloatingMenu();
+    setTimeout(() => {
+
+        checkForUpdate();
+
+    }, 2000);
 
     // Load saved data
     const savedTest = GM_getValue('currentTest', null);
@@ -819,3 +910,4 @@ ${q.options.map((opt, i) => {
     }
 
 })();
+
