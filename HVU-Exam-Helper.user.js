@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HVU Exam Helper
 // @namespace    http://sv.shop/
-// @version      3.1.2
+// @version      3.1.3
 // @description  Lưu đề thi HVU ra Word + nhận diện và tải PDF, video, Word và tệp đính kèm
 // @author       SV Shop - Zalo 0359677390
 // @match        https://sinhvien.hvu.edu.vn/*
@@ -32,7 +32,7 @@
         FACEBOOK: 'https://www.facebook.com/Dangdat352',
         SHOP: 'https://docs.google.com/spreadsheets/d/1KoQbsf7xffIciikuasRItIdpMyX4NXaYBRTYX5p5tGU/edit?usp=sharing',
         UPDATE_URL: 'https://raw.githubusercontent.com/minhdat253/hvu-exam-helper/main/HVU-Exam-Helper.user.js',
-        FALLBACK_VERSION: '3.1.2',
+        FALLBACK_VERSION: '3.1.3',
         STORAGE: {
             EXAM: 'currentTest',
             MENU: 'hvuMenuStateV3',
@@ -2873,9 +2873,15 @@
         background: var(--bg);
         box-shadow: var(--shadow);
         color: var(--text);
-        transition: width .18s ease, background .18s ease;
+        transition:
+            width .18s ease,
+            background .18s ease,
+            border-color .18s ease,
+            box-shadow .18s ease;
         position: relative;
         isolation: isolate;
+        transform-origin: top right;
+        animation: hvuPanelEnter .30s cubic-bezier(.2,.8,.2,1) both;
     }
 
     .panel-media,
@@ -3159,15 +3165,46 @@
         color: var(--muted);
         background: rgba(255,255,255,.035);
         cursor: pointer;
-        font-size: 13px;
         line-height: 1;
-        transition: .15s ease;
+        transition:
+            color .16s ease,
+            background .16s ease,
+            border-color .16s ease,
+            transform .16s cubic-bezier(.2,.8,.2,1),
+            box-shadow .16s ease;
     }
 
     .icon-btn:hover {
         color: var(--text);
         border-color: var(--border-strong);
         background: var(--surface-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,.10);
+    }
+
+    .icon-btn:active {
+        transform: translateY(0) scale(.92);
+    }
+
+    .header-icon {
+        width: 14px;
+        height: 14px;
+        display: block;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+    }
+
+    .collapse-icon {
+        transition: transform .28s cubic-bezier(.2,.8,.2,1);
+        transform-origin: 50% 50%;
+    }
+
+    .panel.minimized .collapse-icon {
+        transform: rotate(180deg);
     }
 
     .body {
@@ -3180,17 +3217,36 @@
         padding: 11px;
     }
 
-    .panel.minimized .body,
-    .panel.minimized .settings-screen {
-        display: none !important;
+    .content-shell {
+        position: relative;
+        z-index: 1;
+        max-height: 620px;
+        overflow: hidden;
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+            max-height .34s cubic-bezier(.2,.8,.2,1),
+            opacity .22s ease,
+            transform .28s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .panel.minimized .content-shell {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-6px);
+        pointer-events: none;
     }
 
     .panel.minimized .header {
-        border-bottom: 0;
+        border-bottom-color: transparent;
     }
 
     .panel.settings-open .main-screen {
         display: none;
+    }
+
+    .main-screen {
+        animation: hvuContentEnter .23s cubic-bezier(.2,.8,.2,1) both;
     }
 
     .settings-screen {
@@ -3204,6 +3260,7 @@
 
     .panel.settings-open .settings-screen {
         display: block;
+        animation: hvuSettingsEnter .24s cubic-bezier(.2,.8,.2,1) both;
     }
 
     .settings-screen::-webkit-scrollbar,
@@ -3232,6 +3289,7 @@
     }
 
     .dot {
+        position: relative;
         width: 7px;
         height: 7px;
         flex: 0 0 auto;
@@ -3240,9 +3298,22 @@
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--warning) 12%, transparent);
     }
 
+    .dot::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border: 1px solid color-mix(in srgb, var(--warning) 38%, transparent);
+        border-radius: 50%;
+        animation: hvuStatusPulse 1.8s ease-out infinite;
+    }
+
     .status.ready .dot {
         background: var(--success);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 12%, transparent);
+    }
+
+    .status.ready .dot::after {
+        border-color: color-mix(in srgb, var(--success) 34%, transparent);
     }
 
     .stats {
@@ -3293,6 +3364,10 @@
 
     .action-btn:hover {
         transform: translateY(-1px);
+    }
+
+    .action-btn:active {
+        transform: translateY(0) scale(.975);
     }
 
     .primary {
@@ -3374,9 +3449,19 @@
         transition: .14s ease;
     }
 
+    .file {
+        animation: hvuFileEnter .22s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .file:nth-child(2) { animation-delay: 18ms; }
+    .file:nth-child(3) { animation-delay: 36ms; }
+    .file:nth-child(4) { animation-delay: 54ms; }
+    .file:nth-child(5) { animation-delay: 72ms; }
+
     .file:hover {
         border-color: var(--border-strong);
         background: var(--surface-hover);
+        transform: translateX(2px);
     }
 
     .file-badge {
@@ -3428,6 +3513,11 @@
         color: #fff;
         border-color: transparent;
         background: var(--accent);
+        transform: translateY(-1px) scale(1.03);
+    }
+
+    .download:active {
+        transform: scale(.9);
     }
 
     .update {
@@ -3554,11 +3644,27 @@
         transition: .14s ease;
     }
 
+    .theme-option {
+        transition:
+            transform .15s cubic-bezier(.2,.8,.2,1),
+            color .15s ease,
+            border-color .15s ease,
+            background .15s ease;
+    }
+
     .theme-option:hover,
     .theme-option.active {
         color: var(--text);
         border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
         background: var(--surface-hover);
+    }
+
+    .theme-option:hover {
+        transform: translateY(-1px);
+    }
+
+    .theme-option:active {
+        transform: scale(.96);
     }
 
     .theme-option.active {
@@ -3670,9 +3776,22 @@
         cursor: grab;
     }
 
+    .image-preview.has-image {
+        transition:
+            border-color .16s ease,
+            box-shadow .16s ease,
+            transform .16s ease;
+    }
+
+    .image-preview.has-image:hover {
+        border-color: color-mix(in srgb, var(--accent) 38%, var(--border-strong));
+        box-shadow: 0 7px 18px rgba(0,0,0,.10);
+    }
+
     .image-preview.has-image:active,
     .image-preview.dragging {
         cursor: grabbing;
+        transform: scale(.992);
     }
 
     .preview-placeholder {
@@ -3785,6 +3904,84 @@
         padding-top: 9px;
         border-top: 1px solid var(--border);
     }
+
+    @keyframes hvuPanelEnter {
+        from {
+            opacity: 0;
+            transform: translateY(-8px) scale(.975);
+            filter: blur(2px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    @keyframes hvuContentEnter {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes hvuSettingsEnter {
+        from {
+            opacity: 0;
+            transform: translateX(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes hvuFileEnter {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes hvuStatusPulse {
+        0% {
+            opacity: .75;
+            transform: scale(.65);
+        }
+        70%, 100% {
+            opacity: 0;
+            transform: scale(1.55);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .panel,
+        .main-screen,
+        .panel.settings-open .settings-screen,
+        .file,
+        .dot::after {
+            animation: none !important;
+        }
+
+        .content-shell,
+        .collapse-icon,
+        .icon-btn,
+        .action-btn,
+        .download,
+        .theme-option,
+        .image-preview.has-image {
+            transition-duration: .01ms !important;
+        }
+    }
+
 </style>
 
 <div class="panel" id="panel" data-theme="hvu">
@@ -3806,11 +4003,22 @@
         </div>
 
         <div class="header-actions">
-            <button class="icon-btn" id="settingsBtn" title="Cài đặt">⚙</button>
-            <button class="icon-btn" id="minimizeBtn" title="Thu gọn">⌄</button>
+            <button class="icon-btn" id="settingsBtn" title="Cài đặt" aria-label="Cài đặt">
+                <svg class="header-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Z"></path>
+                    <path d="M19.14 12.94c.04-.31.06-.62.06-.94s-.02-.63-.07-.94l2.03-1.58-1.92-3.32-2.39.96a7.4 7.4 0 0 0-1.62-.94L14.87 3h-3.84l-.36 3.18c-.57.24-1.11.55-1.61.94l-2.4-.96-1.92 3.32 2.03 1.58c-.05.31-.07.63-.07.94s.02.63.07.94l-2.03 1.58 1.92 3.32 2.4-.96c.5.39 1.04.7 1.61.94l.36 3.18h3.84l.36-3.18c.58-.24 1.12-.55 1.62-.94l2.39.96 1.92-3.32-2.02-1.58Z"></path>
+                </svg>
+            </button>
+
+            <button class="icon-btn collapse-btn" id="minimizeBtn" title="Thu gọn" aria-label="Thu gọn menu">
+                <svg class="header-icon collapse-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m6.5 14.5 5.5-5 5.5 5"></path>
+                </svg>
+            </button>
         </div>
     </div>
 
+    <div class="content-shell" id="contentShell">
     <div class="body main-screen" id="mainScreen">
         <div class="update" id="updateBox"></div>
 
@@ -3983,6 +4191,7 @@
             </button>
         </div>
     </div>
+    </div>
 </div>`;
 
         document.body.appendChild(host);
@@ -3999,7 +4208,8 @@
 
         if (savedState.minimized) {
             panel.classList.add('minimized');
-            minimizeBtn.textContent = '›';
+            minimizeBtn.setAttribute('title', 'Mở rộng');
+            minimizeBtn.setAttribute('aria-label', 'Mở rộng menu');
         }
 
         if (Number.isFinite(savedState.left)) {
@@ -4016,7 +4226,12 @@
 
             panel.classList.toggle('minimized');
             const minimized = panel.classList.contains('minimized');
-            minimizeBtn.textContent = minimized ? '›' : '⌄';
+
+            minimizeBtn.setAttribute('title', minimized ? 'Mở rộng' : 'Thu gọn');
+            minimizeBtn.setAttribute(
+                'aria-label',
+                minimized ? 'Mở rộng menu' : 'Thu gọn menu'
+            );
 
             const state = getMenuState();
             saveMenuState({
